@@ -195,8 +195,7 @@ public class Logger {
            return log4j.isEnabledFor(log4jLevel);
        }
    }
-
-
+   
 
     /**
      * Log with TRACE level
@@ -204,111 +203,6 @@ public class Logger {
      * @param args Pattern arguments
      */
     public static void trace(String message, Object... args) {
-        trace(1, message, args);
-    }
-
-    /**
-     * Log with DEBUG level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void debug(String message, Object... args) {
-        debug(1, message, args);
-    }
-
-    /**
-     * Log with DEBUG level
-     * @param e the exception to log
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void debug(Throwable e, String message, Object... args) {
-        debug(1, e, message, args);
-    }
-
-    /**
-     * Log with INFO level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void info(String message, Object... args) {
-        info(1, message, args);
-    }
-
-    /**
-     * Log with INFO level
-     * @param e the exception to log
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void info(Throwable e, String message, Object... args) {
-        info(1, e, message, args);
-    }
-
-    /**
-     * Log with WARN level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void warn(String message, Object... args) {
-        warn(1, message, args);
-    }
-
-    /**
-     * Log with WARN level
-     * @param e the exception to log
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void warn(Throwable e, String message, Object... args) {
-        warn(1, e, message, args);
-    }
-
-    /**
-     * Log with ERROR level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void error(String message, Object... args) {
-        error(1, message, args);
-    }
-
-    /**
-     * Log with ERROR level
-     * @param e the exception to log
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void error(Throwable e, String message, Object... args) {
-        error(1, e, message, args);
-    }
-
-    /**
-     * Log with FATAL level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void fatal(String message, Object... args) {
-        fatal(1, message, args);
-    }
-
-    /**
-     * Log with FATAL level
-     * @param e the exception to log
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void fatal(Throwable e, String message, Object... args) {
-        fatal(1, e, message, args);
-    }
-
-
-    /**
-     * Log with TRACE level
-     * @param message The message pattern
-     * @param args Pattern arguments
-     */
-    public static void trace(int additionalStackFrames, String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.TRACE)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -319,7 +213,7 @@ public class Logger {
             } else {
                 try {
                     if (recordCaller) {
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).trace(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).trace(format(message, args));
                     } else {
                         log4j.trace(format(message, args));
                     }
@@ -335,7 +229,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void debug(int additionalStackFrames, String message, Object... args) {
+    public static void debug(String message, Object... args) {
         if (isDebugEnabled()) {
             if (forceJuli || log4j == null) {
                 try {
@@ -346,7 +240,7 @@ public class Logger {
             } else {
                 try {
                     if (recordCaller) {
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).debug(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).debug(format(message, args));
                     } else {
                         log4j.debug(format(message, args));
                     }
@@ -363,7 +257,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void debug(int additionalStackFrames, Throwable e, String message, Object... args) {
+    public static void debug(Throwable e, String message, Object... args) {
         if (isDebugEnabled()) {
             if (forceJuli || log4j == null) {
                 try {
@@ -377,7 +271,7 @@ public class Logger {
                 try {
                     if (!niceThrowable(org.apache.log4j.Level.DEBUG, e, message, args)) {
                         if (recordCaller) {
-                            org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).debug(format(message, args), e);
+                            org.apache.log4j.Logger.getLogger(getCallerClassName()).debug(format(message, args), e);
                         } else {
                             log4j.debug(format(message, args), e);
                         }
@@ -394,7 +288,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void info(int additionalStackFrames, String message, Object... args) {
+    public static void info(String message, Object... args) {
         if(isEnabledFor(org.apache.log4j.Level.INFO)){
             if (forceJuli || log4j == null) {
                 try {
@@ -408,7 +302,7 @@ public class Logger {
                         // TODO: It is expensive to extract caller-info
                         // we should only do it if we know the message is being
                         // logged (level)
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).info(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).info(format(message, args));
                     } else {
                         log4j.info(format(message, args));
                     }
@@ -425,7 +319,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void info(int additionalStackFrames, Throwable e, String message, Object... args) {
+    public static void info(Throwable e, String message, Object... args) {
         if(isEnabledFor(org.apache.log4j.Level.INFO)){
             if (forceJuli || log4j == null) {
                 try {
@@ -439,7 +333,7 @@ public class Logger {
                 try {
                     if (!niceThrowable(org.apache.log4j.Level.INFO, e, message, args)) {
                         if (recordCaller) {
-                            org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).info(format(message, args), e);
+                            org.apache.log4j.Logger.getLogger(getCallerClassName()).info(format(message, args), e);
                         } else {
                             log4j.info(format(message, args), e);
                         }
@@ -456,7 +350,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void warn(int additionalStackFrames, String message, Object... args) {
+    public static void warn(String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.WARN)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -467,7 +361,7 @@ public class Logger {
             } else {
                 try {
                     if (recordCaller) {
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).warn(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).warn(format(message, args));
                     } else {
                         log4j.warn(format(message, args));
                     }
@@ -484,7 +378,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void warn(int additionalStackFrames, Throwable e, String message, Object... args) {
+    public static void warn(Throwable e, String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.WARN)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -498,7 +392,7 @@ public class Logger {
                 try {
                     if (!niceThrowable(org.apache.log4j.Level.WARN, e, message, args)) {
                         if (recordCaller) {
-                            org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).warn(format(message, args), e);
+                            org.apache.log4j.Logger.getLogger(getCallerClassName()).warn(format(message, args), e);
                         } else {
                             log4j.warn(format(message, args), e);
                         }
@@ -515,7 +409,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void error(int additionalStackFrames, String message, Object... args) {
+    public static void error(String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.ERROR)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -526,7 +420,7 @@ public class Logger {
             } else {
                 try {
                     if (recordCaller) {
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).error(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).error(format(message, args));
                     } else {
                         log4j.error(format(message, args));
                     }
@@ -543,7 +437,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void error(int additionalStackFrames, Throwable e, String message, Object... args) {
+    public static void error(Throwable e, String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.ERROR)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -557,7 +451,7 @@ public class Logger {
                 try {
                     if (!niceThrowable(org.apache.log4j.Level.ERROR, e, message, args)) {
                         if (recordCaller) {
-                            org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).error(format(message, args), e);
+                            org.apache.log4j.Logger.getLogger(getCallerClassName()).error(format(message, args), e);
                         } else {
                             log4j.error(format(message, args), e);
                         }
@@ -574,7 +468,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void fatal(int additionalStackFrames, String message, Object... args) {
+    public static void fatal(String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.FATAL)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -585,7 +479,7 @@ public class Logger {
             } else {
                 try {
                     if (recordCaller) {
-                        org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).fatal(format(message, args));
+                        org.apache.log4j.Logger.getLogger(getCallerClassName()).fatal(format(message, args));
                     } else {
                         log4j.fatal(format(message, args));
                     }
@@ -602,7 +496,7 @@ public class Logger {
      * @param message The message pattern
      * @param args Pattern arguments
      */
-    public static void fatal(int additionalStackFrames, Throwable e, String message, Object... args) {
+    public static void fatal(Throwable e, String message, Object... args) {
         if (isEnabledFor(org.apache.log4j.Level.FATAL)) {
             if (forceJuli || log4j == null) {
                 try {
@@ -616,7 +510,7 @@ public class Logger {
                 try {
                     if (!niceThrowable(org.apache.log4j.Level.FATAL, e, message, args)) {
                         if (recordCaller) {
-                            org.apache.log4j.Logger.getLogger(getCallerClassName(5 + additionalStackFrames)).fatal(format(message, args), e);
+                            org.apache.log4j.Logger.getLogger(getCallerClassName()).fatal(format(message, args), e);
                         } else {
                             log4j.fatal(format(message, args), e);
                         }
